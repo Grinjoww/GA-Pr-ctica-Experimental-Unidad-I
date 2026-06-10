@@ -1,9 +1,9 @@
 # BIOPET — Agendar cita veterinaria (Práctica Experimental Unidad I)
 
 Módulo de *agendamiento de citas* del sistema *BIOPET*, implementado como
-*frontend* con *HTML5 semántico, **CSS3 responsivo* (Grid + Flexbox) y
-*JavaScript ES6+ modular. Consume la API pública **Dog CEO* y cumple los
-principios de accesibilidad *WCAG 2.1 nivel AA*.
+*frontend* con **HTML5 semántico**, **CSS3 responsivo** (Grid + Flexbox) y
+**JavaScript ES6+ modular**. Consume la API pública **Dog CEO** y cumple los
+principios de accesibilidad **WCAG 2.1 nivel AA**.
 
 > Nota: esta es la aplicación de la *Práctica Experimental de la Unidad I*
 > (fundamentos de frontend con una API pública). El sistema completo BIOPET
@@ -11,19 +11,24 @@ principios de accesibilidad *WCAG 2.1 nivel AA*.
 > Fin de Curso y se desarrolla por separado.
 
 *Asignatura:* Aplicaciones Web · Software (Rediseño) · UTEQ
-*EQUIPO H:* Carvajal Loor Johan Stalin · Fajardo Montes Michael Xavier · Mariscal Cabrera Jaime Josué
 
+*EQUIPO H:* Carvajal Loor Johan Stalin · Fajardo Montes Michael Xavier · Mariscal Cabrera Jaime Josué
 ---
 
 ## Estructura del proyecto
-.
+```
+dog-appointment/
+│
 ├── index.html          # Estructura semántica + formulario de cita (10+ tipos de input)
+│
 ├── css/
 │   └── styles.css      # Variables, Grid, Flexbox, @keyframes, modo oscuro
+│
 └── js/
-├── api.js          # Capa de datos (Dog CEO: razas e imágenes)
-├── ui.js           # Capa de presentación (DOM, estados, diálogo, validación, tema)
-└── app.js          # Orquestador (estado, localStorage, eventos)
+    ├── api.js          # Capa de datos (Dog CEO: razas e imágenes)
+    ├── ui.js           # Capa de presentación (DOM, estados, diálogo, validación, tema)
+    └── app.js          # Orquestador (estado, localStorage, eventos)
+```
 ## Cómo ejecutar
 
 1. Clonar el repositorio o descargar el código.
