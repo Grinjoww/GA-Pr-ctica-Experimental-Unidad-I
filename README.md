@@ -1,4 +1,3 @@
-# GA-Pr-ctica-Experimental-Unidad-I
 # BIOPET — Agendar cita veterinaria (Práctica Experimental Unidad I)
 
 Módulo de *agendamiento de citas* del sistema *BIOPET*, implementado como
