@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="BIOPET — Agenda en línea las citas veterinarias de tu mascota. Frontend accesible y responsivo que consume la API pública Dog CEO. Asignatura Aplicaciones Web, UTEQ.">
+  <meta name="theme-color" content="#0e7d72">
+  <title>BIOPET | Agendar cita veterinaria</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="enlace-salto" href="#contenido">Saltar al contenido principal</a>
+
+  <header class="cabecera">
+    <div class="contenedor cabecera__fila">
+      <a class="marca" href="#contenido">
+        <span class="marca__monograma" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M11 3h2v3h3v2h-3v3h-2V8H8V6h3z" fill="currentColor"/>
+            <circle cx="6.5" cy="15" r="1.6" fill="currentColor"/>
+            <circle cx="17.5" cy="15" r="1.6" fill="currentColor"/>
+            <circle cx="9" cy="12.5" r="1.6" fill="currentColor"/>
+            <circle cx="15" cy="12.5" r="1.6" fill="currentColor"/>
+            <path d="M12 15.5c2.2 0 4 1.6 4 3.4 0 1.2-1 1.6-2 1.6-.9 0-1.3-.4-2-.4s-1.1.4-2 .4c-1 0-2-.4-2-1.6 0-1.8 1.8-3.4 4-3.4z" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="marca__texto">
+          <span class="marca__eyebrow">Gestión veterinaria</span>
+          <span class="marca__titulo">BIOPET</span>
+        </span>
+      </a>
+
+      <nav class="nav" aria-label="Navegación principal">
+        <a href="#agendar">Agendar</a>
+        <a href="#citas">Citas</a>
+        <button type="button" id="btn-tema" class="btn-tema" aria-pressed="false"
+                aria-label="Cambiar entre tema claro y oscuro">
+          <svg class="icono icono-luna" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" fill="currentColor"/>
+          </svg>
+          <svg class="icono icono-sol" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="12" cy="12" r="4.5" fill="currentColor"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9 17 7M7 17l-2.1 2.1"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span class="btn-tema__texto">Tema</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="contenido" class="contenedor disposicion">
+    <div class="columna-principal">
+
+      <!-- HERO -->
+      <section class="hero" aria-labelledby="hero-titulo">
+        <p class="eyebrow">BIOPET · Proyecto Fin de Curso · Unidad I</p>
+        <h1 id="hero-titulo" class="hero__titulo">Agenda la cita de tu mascota en línea.</h1>
+        <p class="hero__lead">
+          Completa el formulario para reservar una consulta veterinaria. El sistema obtiene
+          el catálogo de razas y una foto referencial de tu mascota desde una API pública,
+          sin recargar la página.
+        </p>
+        <p class="hero__stat" aria-live="polite">
+          <strong id="conteo">0</strong> citas agendadas
+        </p>
+      </section>
+
+      <!-- AGENDAR CITA -->
+      <section id="agendar" aria-labelledby="agendar-titulo">
+        <div class="seccion-encabezado">
+          <h2 id="agendar-titulo">Agendar cita</h2>
+        </div>
+
+        <form id="form-cita" class="formulario" novalidate>
+          <p class="grupo-titulo campo--ancho">Datos de la mascota</p>
+
+          <div class="campo">
+            <label for="mascota">Nombre de la mascota <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="mascota" name="mascota" autocomplete="off"
+                   required aria-describedby="err-mascota">
+            <span class="error-campo" id="err-mascota" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="especie">Especie <span class="req" aria-hidden="true">*</span></label>
+            <select id="especie" name="especie" required aria-describedby="err-especie">
+              <option value="">Selecciona una opción</option>
+              <option value="canino">Canino</option>
+              <option value="felino">Felino</option>
+              <option value="otro">Otro</option>
+            </select>
+            <span class="error-campo" id="err-especie" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="raza">Raza <span class="req" aria-hidden="true">*</span></label>
+            <select id="raza" name="raza" required aria-describedby="err-raza ayuda-raza">
+              <option value="">Cargando razas…</option>
+            </select>
+            <small class="ayuda" id="ayuda-raza">Catálogo de razas caninas (Dog CEO API).</small>
+            <span class="error-campo" id="err-raza" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="edad">Edad (años)</label>
+            <input type="number" id="edad" name="edad" min="0" max="40" inputmode="numeric">
+          </div>
+
+          <p class="grupo-titulo campo--ancho">Datos del dueño</p>
+
+          <div class="campo">
+            <label for="dueno">Nombre del dueño <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="dueno" name="dueno" autocomplete="name"
+                   required aria-describedby="err-dueno">
+            <span class="error-campo" id="err-dueno" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="correo">Correo electrónico <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="correo" name="correo" autocomplete="email"
+                   required aria-describedby="err-correo">
+            <span class="error-campo" id="err-correo" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" autocomplete="tel"
+                   pattern="[0-9]{10}" title="Ingresa 10 dígitos numéricos"
+                   aria-describedby="err-telefono">
+            <span class="error-campo" id="err-telefono" aria-live="polite"></span>
+          </div>
+
+          <p class="grupo-titulo campo--ancho">Datos de la cita</p>
+
+          <div class="campo">
+            <label for="fecha">Fecha <span class="req" aria-hidden="true">*</span></label>
+            <input type="date" id="fecha" name="fecha" required aria-describedby="err-fecha">
+            <span class="error-campo" id="err-fecha" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="hora">Hora <span class="req" aria-hidden="true">*</span></label>
+            <input type="time" id="hora" name="hora" required aria-describedby="err-hora">
+            <span class="error-campo" id="err-hora" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="veterinario">Veterinario <span class="req" aria-hidden="true">*</span></label>
+            <select id="veterinario" name="veterinario" required aria-describedby="err-veterinario">
+              <option value="">Selecciona un profesional</option>
+              <option value="Dra. María Gómez">Dra. María Gómez</option>
+              <option value="Dr. Luis Andrade">Dr. Luis Andrade</option>
+              <option value="Dra. Paula Vera">Dra. Paula Vera</option>
+            </select>
+            <span class="error-campo" id="err-veterinario" aria-live="polite"></span>
+          </div>
+
+          <div class="campo">
+            <label for="urgencia">Nivel de urgencia: <output id="valor-urgencia">3</output>/5</label>
+            <input type="range" id="urgencia" name="urgencia" min="1" max="5" value="3">
+          </div>
+
+          <fieldset class="campo campo--ancho">
+            <legend>Tipo de consulta <span class="req" aria-hidden="true">*</span></legend>
+            <div class="opciones-inline">
+              <label class="opcion"><input type="radio" name="tipo" value="General" checked> General</label>
+              <label class="opcion"><input type="radio" name="tipo" value="Vacunación"> Vacunación</label>
+              <label class="opcion"><input type="radio" name="tipo" value="Emergencia"> Emergencia</label>
+            </div>
+          </fieldset>
+
+          <div class="campo campo--ancho">
+            <label for="motivo">Motivo de la consulta</label>
+            <textarea id="motivo" name="motivo" rows="3"
+                      placeholder="Describe brevemente el motivo de la cita…"></textarea>
+          </div>
+
+          <div class="campo">
+            <label for="foto">Foto de la mascota (opcional)</label>
+            <input type="file" id="foto" name="foto" accept="image/*">
+          </div>
+
+          <div class="campo campo--ancho">
+            <label class="opcion">
+              <input type="checkbox" id="acepto" name="acepto" required aria-describedby="err-acepto">
+              Acepto la política de tratamiento de datos <span class="req" aria-hidden="true">*</span>
+            </label>
+            <span class="error-campo" id="err-acepto" aria-live="polite"></span>
+          </div>
+
+          <div class="campo campo--ancho acciones">
+            <button type="submit" class="boton boton--primario">Agendar cita</button>
+            <button type="reset" class="boton">Limpiar</button>
+          </div>
+
+          <p id="form-mensaje" class="form-mensaje" role="status" aria-live="polite" hidden></p>
+        </form>
+      </section>
+
+      <!-- CITAS AGENDADAS -->
+      <section id="citas" aria-labelledby="citas-titulo">
+        <div class="seccion-encabezado">
+          <h2 id="citas-titulo">Citas agendadas</h2>
+        </div>
+
+        <div class="buscador-caja">
+          <label for="buscador">Buscar por mascota, dueño o veterinario</label>
+          <div class="campo-icono">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="icono">
+              <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/>
+              <path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <input type="search" id="buscador" name="buscador" placeholder="Ej. Max, Dra. Gómez…"
+                   autocomplete="off">
+          </div>
+        </div>
+
+        <!-- Estados de la interfaz -->
+        <div id="estado-cargando" class="estado" role="status" hidden>
+          <span class="spinner" aria-hidden="true"></span>
+          <span id="estado-cargando-texto">Cargando…</span>
+        </div>
+
+        <div id="estado-error" class="estado estado--error" role="alert" hidden>
+          <p id="estado-error-texto"></p>
+          <button type="button" id="btn-reintentar" class="boton">Reintentar</button>
+        </div>
+
+        <p id="estado-vacio" class="estado" hidden>
+          Aún no hay citas agendadas. Completa el formulario para agendar la primera.
+        </p>
+
+        <!-- Las tarjetas de citas se generan dinámicamente -->
+        <div id="lista-citas" class="grid-tarjetas"></div>
+      </section>
+    </div>
+
+    <!-- ASIDE -->
+    <aside class="columna-lateral" aria-labelledby="aside-titulo">
+      <div class="tarjeta-info">
+        <h2 id="aside-titulo">Acerca de BIOPET</h2>
+        <p>Sistema integral para centralizar la información clínica y administrativa de
+          clínicas veterinarias. Esta vista corresponde al módulo de <strong>agendamiento
+          de citas</strong>.</p>
+        <ul class="lista-marcas">
+          <li>HTML5 semántico + WAI-ARIA</li>
+          <li>CSS Grid, Flexbox y modo oscuro</li>
+          <li>JavaScript ES6 modular</li>
+          <li>API pública: Dog CEO</li>
+        </ul>
+      </div>
+      <div class="tarjeta-info">
+        <h2>Equipo H</h2>
+        <p class="texto-muted">Carvajal Loor · Fajardo Montes · Mariscal Cabrera</p>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="pie">
+    <div class="contenedor">
+      <p>&copy; 2026 BIOPET — Universidad Técnica Estatal de Quevedo. Asignatura Aplicaciones Web.</p>
+    </div>
+  </footer>
+
+  <!-- Diálogo de detalle (foco atrapado y Escape gestionados de forma nativa) -->
+  <dialog id="dialogo-detalle" class="dialogo" aria-labelledby="dialogo-titulo">
+    <div class="dialogo__cabecera">
+      <h2 id="dialogo-titulo">Detalle de la cita</h2>
+      <button type="button" id="dialogo-cerrar" class="dialogo__cerrar" aria-label="Cerrar diálogo">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" class="icono">
+          <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div id="dialogo-cuerpo" class="dialogo__cuerpo"></div>
+  </dialog>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
